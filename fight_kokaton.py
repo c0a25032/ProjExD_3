@@ -90,7 +90,7 @@ class Bird:
 class Bomb:
     """
     追加機能1
-    打ち落とした爆弾の数を表示するスコアクラス
+    打ち落とした爆弾の数を表示するスコアクラス.
     """
     def __init__(self, color: tuple[int, int, int], rad: int):
         self.img = pg.Surface((2 * rad, 2 * rad))
@@ -137,7 +137,7 @@ class Beam:
 
 class Score:
     """
-    スコア表示
+    スコア表示するクラス
     """
     def __init__(self):
         self.font = pg.font.SysFont("hgpkyokashotai", 30)
