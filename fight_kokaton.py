@@ -89,7 +89,7 @@ class Bird:
 
 class Bomb:
     """
-    追加機能2
+    追加機能1
     打ち落とした爆弾の数を表示するスコアクラス
     """
     def __init__(self, color: tuple[int, int, int], rad: int):
