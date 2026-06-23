@@ -154,7 +154,8 @@ class Score:
 class Explosion:
     """
     追加機能3
-    爆弾打ち落とし時の爆発エフェクトクラス
+    爆弾打ち落とし時の爆発エフェクトクラスです。
+    
     """
     def __init__(self, obj_rct: pg.Rect):
         self.img = pg.image.load("fig/explosion.gif")
