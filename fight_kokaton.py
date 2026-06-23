@@ -137,7 +137,9 @@ class Beam:
 
 class Score:
     """
-    スコア表示するクラス
+    
+    スコア表示するクラスです。
+    
     """
     def __init__(self):
         self.font = pg.font.SysFont("hgpkyokashotai", 30)
