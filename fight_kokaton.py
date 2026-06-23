@@ -173,10 +173,11 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     unko_img = pg.image.load("fig/unko.png")
     
-    unko_img = pg.transform.scale(unko_img, (50, 50))
+    unko_img = pg.transform.scale(unko_img, (100, 100))
     unko_list = []
     clock = pg.time.Clock()
     tmr = 0
+    
     sum_mv = [0, 0] 
     bg_img = pg.image.load("fig/pg_bg.jpg")
     bird = Bird((300, 200))
@@ -202,19 +203,33 @@ def main():
         screen.blit(bg_img, [0, 0])
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
-        # 10秒に1回（50fpsなので500フレームごと）落とす処理
-        if tmr > 0 and tmr % 500 == 0:
+        
+                # 50フレームごとに落とす処理
+        if tmr > 0 and tmr % 5 == 0:
             new_unko_rct = unko_img.get_rect()
-            new_unko_rct.center = bird.rct.center  # こうかとんの現在地
+            
+            # こうかとんの移動方向（bird.dire）の逆向きを計算
+            opp_vx = -bird.dire[0]
+            opp_vy = -bird.dire[1]
+            
+            offset_x = opp_vx * 10
+            offset_y = opp_vy * 0
+            
+            # 中心からおしり側にずらした位置に配置
+            new_unko_rct.center = (bird.rct.centerx + offset_x, bird.rct.centery + offset_y)
             unko_list.append(new_unko_rct)
 
+
         # 画面内の物体を下に移動させて描画（画面外に出たら削除）
-        for u_rct in unko_list[:]:
-            u_rct.move_ip(0, 4)  # 下方向に毎フレーム4ピクセルずつ落下
-            if u_rct.top > HEIGHT:
-                unko_list.remove(u_rct)
-            else:
-                screen.blit(unko_img, u_rct)
+                # 画面内の物体を下に移動させて描画（一番下に到達したらその場に残す）
+        for u_rct in unko_list:
+            # まだ画面の底（HEIGHT）に達していない場合だけ下に移動
+            if u_rct.bottom < HEIGHT:
+                u_rct.move_ip(0, 15)  # 下方向に毎フレーム4ピクセルずつ落下
+               
+            # 消去せずに必ず描画する
+            screen.blit(unko_img, u_rct)
+
         # 衝突：鳥 vs 爆弾
         for bomb in bombs:
             if bird.rct.colliderect(bomb.rct):
